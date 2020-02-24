@@ -1,6 +1,6 @@
 class Api::EventsController < ApplicationController
   before_action :authenticate_user
-
+  
   def index
     @events = Event.all
 
@@ -9,9 +9,8 @@ class Api::EventsController < ApplicationController
 
   def create
     @event = Event.new(
-                        user_id: params[:user_id],
+                        user_id: 1,
                         name: params[:name],
-                        category: params[:category],
                         location: params[:location],
                         description: params[:description],
                         start_time: params[:start_time],
@@ -33,7 +32,6 @@ class Api::EventsController < ApplicationController
     @event = Event.find(params[:id])
 
     @event.name = params[:name] || @event.name
-    @event.category = params[:category] || @event.category
     @event.location = params[:location] || @event.location
     @event.description = params[:description] || @event.description
     @event.start_time = params[:start_time] || @event.start_time

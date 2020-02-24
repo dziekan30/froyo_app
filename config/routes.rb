@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   get '/events/:id' => 'events#show'
   patch '/events/:id' => 'events#update'
   delete '/events/:id' => 'events#destroy'
+
+  get '/types' => 'types#index'
   end
 end
