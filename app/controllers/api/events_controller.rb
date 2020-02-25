@@ -9,12 +9,12 @@ class Api::EventsController < ApplicationController
 
   def create
     @event = Event.new(
-                        user_id: 1,
                         name: params[:name],
                         location: params[:location],
                         description: params[:description],
                         start_time: params[:start_time],
                         end_time: params[:end_time],
+                        user_id: current_user.id
                         )
     if @event.save
       render 'show.json.jb'
