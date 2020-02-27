@@ -4,6 +4,7 @@ class Api::EventsController < ApplicationController
   def index
     
     @events = current_user.events
+    @events = @events.order(:start_time)
     render 'index.json.jb'
 
   end
@@ -15,8 +16,11 @@ class Api::EventsController < ApplicationController
                         description: params[:description],
                         start_time: params[:start_time],
                         end_time: params[:end_time],
+                        buffer: params[:buffer],
                         user_id: current_user.id
-                        )
+                      )
+    @event.buffer_mod
+    @event.unique_date_time_check
     if @event.save
       render 'show.json.jb'
     else
@@ -37,7 +41,10 @@ class Api::EventsController < ApplicationController
     @event.description = params[:description] || @event.description
     @event.start_time = params[:start_time] || @event.start_time
     @event.end_time = params[:end_time] || @event.end_time
+    @event.buffer = params[:buffer] || @event.buffer
 
+    @event.buffer_mod
+    @event.unique_date_time_check
     if @event.save
       render 'show.json.jb'
     else
